@@ -16,7 +16,6 @@ class WordListFragment : Fragment() {
     private var _binding : FragmentWordListBinding? = null
 
     private val binding get() = _binding!!
-    private lateinit var  recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +28,11 @@ class WordListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWordListBinding.inflate(inflater, container, false)
-        recyclerView = binding.recyclerView
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val letterId = activity?.intent?.extras?.getString(LETTER).toString()
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
@@ -42,9 +44,6 @@ class WordListFragment : Fragment() {
         )
 
         activity?.title = getString(R.string.detail_prefix) + " " + letterId
-
-
-        return binding.root
     }
 
     override fun onDestroyView() {
